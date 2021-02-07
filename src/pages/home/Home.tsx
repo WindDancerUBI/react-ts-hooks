@@ -12,9 +12,8 @@ import sideImage2 from '../../assets/images/sider_2019_02-04.png';
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
 import styles from './Home.module.scss'
 import { useTranslation } from 'react-i18next'
-import axios from 'axios'
 import { useSelector } from '../../redux/hooks'
-import { fetchProductFailedActionCreator, fetchProductStartActionCreator, fetchProductSuccessActionCreator} from '../../redux/recommendProduction/recommendProductActions'
+import { fetchProductListData} from '../../redux/recommendProduction/recommendProductActions'
 import { useDispatch } from 'react-redux'
 
 export const HomePage: React.FC = () => {
@@ -26,14 +25,7 @@ export const HomePage: React.FC = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchProductStartActionCreator())
-    axios.get('http://123.56.149.216:8080/api/productCollections')
-      .then(res => {
-        dispatch(fetchProductSuccessActionCreator(res.data))
-      })
-      .catch(err => {
-        dispatch(fetchProductFailedActionCreator(err.message))
-      })
+    dispatch(fetchProductListData())
   }, [])
 
   return (
