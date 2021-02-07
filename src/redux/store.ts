@@ -5,10 +5,16 @@
  * @Function: 描述一下模块的功能
  */
 
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import languageReducer from "./language/languageReducers";
+import recommendProductReducer from './recommendProduction/recommendProductReducers';
 
-const store = createStore(languageReducer)
+const rootReducer = combineReducers({
+  language: languageReducer,
+  recommendProduct: recommendProductReducer
+})
 
+const store = createStore(rootReducer)
 export type RootState = ReturnType<typeof store.getState>
+
 export default store

@@ -4,40 +4,37 @@
  * @Date: 2021-02-02 21:34:48
  * @Function: 描述一下模块的功能
  */
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Col, Row, Typography, Spin } from 'antd';
 import { Header, Footer, SideMenu, Carousel, ProductCollect } from "../../components";
-// import { productList1, productList2, productList3 } from "./mockups";
 import sideImage from '../../assets/images/sider_2019_12-09.png';
 import sideImage2 from '../../assets/images/sider_2019_02-04.png';
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
 import styles from './Home.module.scss'
 import { useTranslation } from 'react-i18next'
 import axios from 'axios'
+import { useSelector } from '../../redux/hooks'
+import { fetchProductFailedActionCreator, fetchProductStartActionCreator, fetchProductSuccessActionCreator} from '../../redux/recommendProduction/recommendProductActions'
+import { useDispatch } from 'react-redux'
 
 export const HomePage: React.FC = () => {
 
   const { t } = useTranslation()
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string|null>(null)
-  const [productList,setProductList] = useState<any[]>([])
+  const loading = useSelector(state => state.recommendProduct.loading)
+  const error = useSelector(state => state.recommendProduct.error)
+  const productList = useSelector(state => state.recommendProduct.productList)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    getData()
-  }, [])
-
-  const getData = () => {
+    dispatch(fetchProductStartActionCreator())
     axios.get('http://123.56.149.216:8080/api/productCollections')
       .then(res => {
-        setProductList(res.data)
-        setLoading(false)
-        setError(null)
+        dispatch(fetchProductSuccessActionCreator(res.data))
       })
       .catch(err => {
-        setLoading(false)
-        setError(err.message)
+        dispatch(fetchProductFailedActionCreator(err.message))
       })
-  }
+  }, [])
 
   return (
     loading? 
@@ -49,6 +46,7 @@ export const HomePage: React.FC = () => {
           marginLeft: "auto",
           marginRight: "auto",
           width: "100%",
+          height: "100vh"
         }}
       />)
       : 

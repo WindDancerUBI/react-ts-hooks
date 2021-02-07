@@ -19,7 +19,7 @@ export const Header: React.FC = () => {
 
   const history = useHistory()
   const { t } = useTranslation()
-  const languageList = useSelector(state => state.languageList)
+  const languageList = useSelector(state => state.language.languageList)
   const dispatch = useDispatch()
 
   const menuClickHandle = (e) => {
