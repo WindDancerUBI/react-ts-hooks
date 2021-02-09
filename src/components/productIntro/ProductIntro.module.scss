@@ -1,0 +1,14 @@
+.intro {
+  padding: 20px;
+  &-detail {
+    width: 100%;
+    background-color: #fef9ee;
+    margin-bottom: 7px;
+    margin-top: 7px;
+    font-size: 18px;
+  }
+  &-strong {
+    font-size: 28px; 
+    color: rgb(192, 0, 0);
+  }
+}
