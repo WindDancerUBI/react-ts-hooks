@@ -5,15 +5,18 @@
  * @Function: 描述一下模块的功能
  */
 
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import languageReducer from "./language/languageReducers";
 import recommendProductReducer from './recommendProduction/recommendProductReducers';
+import { ProductDetail } from './productDetail/productDetailSlice'
 import thunk from 'redux-thunk'
 import { actionLog, changeLanguage } from './middlewares'
+import { combineReducers } from '@reduxjs/toolkit'
 
 const rootReducer = combineReducers({
   language: languageReducer,
-  recommendProduct: recommendProductReducer
+  recommendProduct: recommendProductReducer,
+  productDetail: ProductDetail.reducer,
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk, actionLog, changeLanguage))

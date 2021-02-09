@@ -10,7 +10,9 @@ import { Header, Footer, ProductIntro } from '../../components'
 import styles from './DetailPage.module.scss'
 import { Anchor, Menu, Divider, Typography, Spin, Row, Col, DatePicker } from 'antd'
 import axios from 'axios'
-
+import { useSelector } from '../../redux/hooks'
+import { useDispatch } from 'react-redux'
+import { ProductDetail } from '../../redux/productDetail/productDetailSlice'
 interface MatchParams {
   touristRouteId: string;
 }
@@ -20,22 +22,21 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = (
 ) => {
 
   const { touristRouteId } = useParams<MatchParams>()
-  const [product, setProduct] = useState<any>(null)
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string|null>(null)
+  const product = useSelector(state => state.productDetail.data)
+  const loading = useSelector(state => state.productDetail.loading)
+  const error = useSelector(state => state.productDetail.error)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const getProductData = async () => {
-      setLoading(true);
+      dispatch(ProductDetail.actions.fetchStart())
       try {
         const { data } = await axios.get(
           `http://123.56.149.216:8080/api/touristRoutes/${touristRouteId}`
         );
-        setProduct(data);
-        setLoading(false);
+        dispatch(ProductDetail.actions.fetchSuccess(data))
       } catch (error) {
-        setError(error.message);
-        setLoading(false);
+        dispatch(ProductDetail.actions.fetchFailed(error.message))
       }
     };
     getProductData()
