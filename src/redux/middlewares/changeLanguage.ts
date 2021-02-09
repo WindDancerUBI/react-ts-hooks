@@ -6,7 +6,6 @@
  */
 
 import { Middleware } from "redux"
-import { CHANGE_LANGUAGE } from "../language/languageActions";
 import i18n from "i18next";
 
 interface IAction {
@@ -14,8 +13,9 @@ interface IAction {
   payload: any
 }
 
+// 用了redux-toolkit后，他的action.type会有所不同，特别注意
 export const changeLanguage: Middleware = (store) => (next) => (action: IAction) => {
-  if (action.type === CHANGE_LANGUAGE) {
+  if (action.type === 'language/changeLanguage') {
     i18n.changeLanguage(action.payload)
   }
   next(action)

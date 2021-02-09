@@ -16,12 +16,12 @@ const createMenu = (list: any[]) => {
   return list.map((item, index) => {
     if (item.subMenu) {
       return (
-        <Menu.SubMenu title={<span><GifOutlined />{item.title}</span>}>
+        <Menu.SubMenu key={'submenu' + index} title={<span><GifOutlined />{item.title}</span>}>
           {createMenu(item.subMenu)}
         </Menu.SubMenu>
       )
     } else {
-      return <Menu.Item>{<span><GifOutlined />{item}</span>}</Menu.Item>
+      return <Menu.Item key={index}>{<span><GifOutlined />{item}</span>}</Menu.Item>
     }
   })
 }

@@ -9,10 +9,9 @@ import { RouteComponentProps, useParams } from "react-router-dom";
 import { Header, Footer, ProductIntro } from '../../components'
 import styles from './DetailPage.module.scss'
 import { Anchor, Menu, Divider, Typography, Spin, Row, Col, DatePicker } from 'antd'
-import axios from 'axios'
 import { useSelector } from '../../redux/hooks'
 import { useDispatch } from 'react-redux'
-import { ProductDetail } from '../../redux/productDetail/productDetailSlice'
+import { getProductDetail } from '../../redux/productDetail/productDetailSlice'
 interface MatchParams {
   touristRouteId: string;
 }
@@ -28,18 +27,7 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = (
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const getProductData = async () => {
-      dispatch(ProductDetail.actions.fetchStart())
-      try {
-        const { data } = await axios.get(
-          `http://123.56.149.216:8080/api/touristRoutes/${touristRouteId}`
-        );
-        dispatch(ProductDetail.actions.fetchSuccess(data))
-      } catch (error) {
-        dispatch(ProductDetail.actions.fetchFailed(error.message))
-      }
-    };
-    getProductData()
+    dispatch(getProductDetail(touristRouteId))
   },[])
 
   if(loading) {

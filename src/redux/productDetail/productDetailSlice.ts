@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 interface stateType  {
   loading: boolean;
@@ -12,21 +13,33 @@ const initialState: stateType = {
   data: null
 }
 
+// slice异步actioncreator
+export const getProductDetail = createAsyncThunk(
+  'productDetail/getProductDetail',
+  async(touristRouteId: string) => {
+    const { data } = await axios.get(
+      `http://123.56.149.216:8080/api/touristRoutes/${touristRouteId}`
+    );
+    return data
+  }
+)
+
 export const ProductDetail = createSlice({
   name: 'productDetail',
   initialState,
-  reducers: {
-    fetchStart: (state) => {
+  reducers: {},
+  extraReducers: {
+    [getProductDetail.pending.type]: (state) => {
       state.loading = true
     },
-    fetchSuccess: (state, action: PayloadAction<any>) => {
+    [getProductDetail.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.loading = false
       state.data = action.payload
       state.error = null
     },
-    fetchFailed: (state, action: PayloadAction<string | null>) => {
-      state.loading = true
+    [getProductDetail.rejected.type]: (state, action: PayloadAction<string|null>) => {
+      state.loading = false
       state.error = action.payload
-    }
+    },
   }
 })
