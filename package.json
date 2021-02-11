@@ -15,6 +15,7 @@
     "@types/react-router-dom": "^5.1.7",
     "antd": "^4.10.3",
     "i18next": "^19.8.6",
+    "jwt-decode": "^3.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-i18next": "^11.8.5",
