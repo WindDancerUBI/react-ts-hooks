@@ -9,7 +9,8 @@
 import { languageSlice } from "./language/languageSlice";
 import recommendProductReducer from './recommendProduction/recommendProductReducers';
 import { ProductDetail } from './productDetail/productDetailSlice'
-import { userSlice } from '../redux/user/userSlice'
+import { userSlice } from './user/userSlice'
+import { ProductSearch } from "./productSearch/productSearchSlice";
 // import thunk from 'redux-thunk'
 import { actionLog, changeLanguage } from './middlewares'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   language: languageSlice.reducer,
   recommendProduct: recommendProductReducer,
   productDetail: ProductDetail.reducer,
-  user: userSlice.reducer
+  user: userSlice.reducer,
+  productSearch: ProductSearch.reducer
 })
 
 // @reduxjs/toolkit默认开启thunk

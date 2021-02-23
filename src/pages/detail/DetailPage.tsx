@@ -4,7 +4,7 @@
  * @Date: 2021-02-02 22:29:20
  * @Function: 描述一下模块的功能
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { RouteComponentProps, useParams } from "react-router-dom";
 import { Header, Footer, ProductIntro } from '../../components'
 import styles from './DetailPage.module.scss'
@@ -28,7 +28,7 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = (
 
   useEffect(() => {
     dispatch(getProductDetail(touristRouteId))
-  },[])
+  },[touristRouteId])
 
   if(loading) {
     return <Spin
